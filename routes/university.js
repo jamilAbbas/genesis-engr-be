@@ -7,7 +7,7 @@ const {
 const router = express.Router();
 
 router.route("/").post(createUnisWithCountry);
-router.route("/:country").get(getUnisByCountry);
+router.route("/getByCountry").get(getUnisByCountry);
 router.route("/:uniId/:country").patch(updateUniversityData);
 
 module.exports = router;

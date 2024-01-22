@@ -34,13 +34,23 @@ exports.createUnisWithCountry = async (req, res) => {
 
 exports.getUnisByCountry = async (req, res) => {
   try {
-    const { country } = req.params;
-    const unis = await University.findAll({
-      where: {
-        country: {
-          [Op.iLike]: country,
-        },
+    const { country, provinceState } = req.query;
+    console.log(req.query);
+    let whereClause = {
+      country: {
+        [Op.iLike]: country,
       },
+    };
+
+    if (provinceState) {
+      whereClause = {
+        ...whereClause,
+        state_province: provinceState,
+      };
+    }
+
+    const unis = await University.findAll({
+      where: whereClause,
     });
     return res.status(200).json({ message: "Success", data: unis });
   } catch (err) {
